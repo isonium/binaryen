@@ -10,6 +10,17 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: flake8
+      run: |
+        sudo apt-get install python3-pip
+        pip3 install --user flake8==3.7.8
+        flake8
+    - run: ./clang-format-diff.sh
+    - run: ./clang-tidy-diff.sh
   build:
     name: Build
     runs-on: ${{ matrix.os }}
